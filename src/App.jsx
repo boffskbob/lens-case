@@ -1,28 +1,36 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 const DEFAULT_DIAMETER = 50;
+
 
 
 function App() {
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(0);
 
-  const handleClick = (e) => {
-    console.log("ran handle click");
-    const sandbox = document.getElementById("sandbox").getBoundingClientRect();
-    const x = e.clientX - sandbox.left - DEFAULT_DIAMETER / 2; 
-    const y = e.clientY - sandbox.top - DEFAULT_DIAMETER / 2;
-
+  function addItem(rawX, rawY){
+    const sandboxBounds = document.getElementById("sandbox").getBoundingClientRect();
+    const x = rawX - sandboxBounds.left - DEFAULT_DIAMETER / 2; 
+    const y = rawY - sandboxBounds.top - DEFAULT_DIAMETER / 2;
+  
     // Add a new draggable item
     setCount(count + 1);
     setItems([...items, { id: count, x, y }]);
   }
 
+  const handleClick = (e) => {
+    const sandbox = document.getElementById("sandbox");
+    if (e.target == sandbox){
+      addItem(e.clientX, e.clientY);
+    }
+    else{
+      // handle select item
+      console.log("clicked item");
+    }
+  }
+
   const handleDrag = (e, id) => {
-    // const item = document.getElementById(id);
     console.log("start drag");
     e.dataTransfer.setData("item-id", id);
   }
@@ -45,9 +53,10 @@ function App() {
   }
 
   return (
-    <>
+    <div id='container'>
       <div id='sandbox' onClick={handleClick} onDrop={handleDrop} onDragOver={handleDragOver}>
       {items.map((item) => (
+        // turn this into a separate component at some point
         <div
           className='lens'
           id={item.id}
@@ -58,7 +67,11 @@ function App() {
         ></div>
       ))}
       </div>
-    </>
+      <div id='selection-container'>
+        <div id="selections"></div>
+        <button id='save-button'>save</button>
+      </div>
+    </div>
   )
 }
 

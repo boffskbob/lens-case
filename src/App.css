@@ -42,10 +42,34 @@
 }
 
 #sandbox {
-  width : 960px;
-  height : 600px;
+  width : 900px;
+  height : 800px;
   background-color: white;
   position: relative;
+}
+
+#selection-container{
+  display: flex;
+  flex-direction: column;
+  width : 300px;
+  height : 800px;
+  justify-content: flex-end;
+}
+
+#selections{
+  background-color:blanchedalmond;
+  flex-grow: 1;
+}
+
+#container{
+  display: flex;
+  flex-direction:row;
+}
+
+#save-button{
+  background-color:darkgray;
+  width : auto;
+  flex-grow: 0;
 }
 
 .lens{
