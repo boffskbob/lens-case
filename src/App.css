@@ -80,3 +80,7 @@
   display: inline-block;
   position : absolute;
 }
+
+.textFormat{
+  color:black;
+}

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import {TextField} from 'react-native'
 import './App.css'
 
 const DEFAULT_DIAMETER = 50;
@@ -8,6 +9,7 @@ const DEFAULT_DIAMETER = 50;
 function App() {
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(0);
+  const [selected, setSelected] = useState(null);
 
   function addItem(rawX, rawY){
     const sandboxBounds = document.getElementById("sandbox").getBoundingClientRect();
@@ -21,12 +23,15 @@ function App() {
 
   const handleClick = (e) => {
     const sandbox = document.getElementById("sandbox");
-    if (e.target == sandbox){
-      addItem(e.clientX, e.clientY);
-    }
-    else{
+    if (e.target.className == 'lens'){
       // handle select item
       console.log("clicked item");
+      setSelected(e.target);
+    }
+    // clicked on sandbox
+    else{
+      addItem(e.clientX, e.clientY);
+      setSelected(null);
     }
   }
 
@@ -68,7 +73,7 @@ function App() {
       ))}
       </div>
       <div id='selection-container'>
-        <div id="selections"></div>
+        <div id="selections">{selected != null && <div className='textFormat'>item selected</div>}</div>
         <button id='save-button'>save</button>
       </div>
     </div>
