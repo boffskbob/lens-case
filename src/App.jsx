@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import {TextField} from 'react-native'
-import './App.css'
+import { useState } from 'react';
+import { Box, Button, Stack, TextField } from '@mui/material';
+import './App.css';
 
 const DEFAULT_DIAMETER = 50;
 
@@ -73,8 +73,10 @@ function App() {
       ))}
       </div>
       <div id='selection-container'>
-        <div id="selections">{selected != null && <div className='textFormat'>item selected</div>}</div>
-        <button id='save-button'>save</button>
+        <div id="selections">{selected != null ? 
+          <Stack direction="row" spacing={2}><Box>Radius</Box><TextField/></Stack> : <Box className='textFormat'>No Item Selected</Box>
+          }</div>
+        <Button>save</Button>
       </div>
     </div>
   )

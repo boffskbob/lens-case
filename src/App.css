@@ -83,4 +83,6 @@
 
 .textFormat{
   color:black;
+  display : inline-block;
+  padding : 10;
 }
