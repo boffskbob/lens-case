@@ -9,7 +9,7 @@ const DEFAULT_DIAMETER = 50;
 function App() {
   const [items, setItems] = useState([]);
   const [count, setCount] = useState(0);
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState(0);
 
   function addItem(rawX, rawY){
     const sandboxBounds = document.getElementById("sandbox").getBoundingClientRect();
@@ -26,13 +26,20 @@ function App() {
     if (e.target.className == 'lens'){
       // handle select item
       console.log("clicked item");
-      setSelected(e.target);
+      setSelected(e.target.id);
+      updateRadius(100, e.target.id);
     }
     // clicked on sandbox
     else{
       addItem(e.clientX, e.clientY);
       setSelected(null);
     }
+  }
+
+  const updateRadius = (radius, id) => {
+    var item = document.getElementById(id);
+    item.style.width = String(radius) + 'px';
+    item.style.height = String(radius) + 'px';
   }
 
   const handleDrag = (e, id) => {
@@ -44,12 +51,18 @@ function App() {
     console.log("start drop");
     const itemId = e.dataTransfer.getData("item-id");
     const item = document.getElementById(itemId);
+
+    const prevWidth = item.style.width;
+    const prevHeight = item.style.height;
+    const diameter = prevWidth.substring(0, prevWidth.length - 2);
+    console.log(prevHeight, prevWidth)
     
     const sandbox = document.getElementById("sandbox").getBoundingClientRect();
-    const x = e.clientX - sandbox.left - DEFAULT_DIAMETER / 2; 
-    const y = e.clientY - sandbox.top - DEFAULT_DIAMETER / 2;
+    const x = e.clientX - sandbox.left - diameter / 2; 
+    const y = e.clientY - sandbox.top - diameter / 2;
+    console.log
 
-    item.setAttribute("style", "left: " + String(x) + "px; top: " + String(y) + "px");
+    item.setAttribute("style", "left: " + String(x) + "px; top: " + String(y) + "px; height: " + prevHeight + "; width: " + prevWidth + ";");
     console.log(e.clientX, e.clientY);
   }
   
