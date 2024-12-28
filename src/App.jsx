@@ -7,9 +7,11 @@ const DEFAULT_DIAMETER = 50;
 
 
 function App() {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([]); // removable
   const [count, setCount] = useState(0);
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(null); // id of the item
+  const [textValue, setTextValue] = useState("");
+
 
   function addItem(rawX, rawY){
     const sandboxBounds = document.getElementById("sandbox").getBoundingClientRect();
@@ -27,6 +29,7 @@ function App() {
       // handle select item
       console.log("clicked item");
       setSelected(e.target.id);
+      setTextValue(e.target.style.width.substring(0, e.target.style.width.length - 2) / 2)
       updateRadius(100, e.target.id);
     }
     // clicked on sandbox
@@ -70,6 +73,13 @@ function App() {
     e.preventDefault();
   }
 
+  const handleTextChange = (e) => {
+    setTextValue(e.target.value);
+    console.log(textValue);
+
+    // adjust selected - error when text isn't numbers
+  }
+
   return (
     <div id='container'>
       <div id='sandbox' onClick={handleClick} onDrop={handleDrop} onDragOver={handleDragOver}>
@@ -79,7 +89,7 @@ function App() {
           className='lens'
           id={item.id}
           key={item.id}
-          style={{ left: item.x, top: item.y }}
+          style={{ left: item.x, top: item.y, height: DEFAULT_DIAMETER + "px", width: DEFAULT_DIAMETER + "px"}}
           draggable
           onDragStart={(e) => handleDrag(e, item.id)}
         ></div>
@@ -87,7 +97,12 @@ function App() {
       </div>
       <div id='selection-container'>
         <div id="selections">{selected != null ? 
-          <Stack direction="row" spacing={2}><Box>Radius</Box><TextField/></Stack> : <Box className='textFormat'>No Item Selected</Box>
+          <Stack direction="row" spacing={2}><Box className='textFormat'>Radius</Box> {/^\d+$/.test(textValue) ? <TextField label="Enter Text"
+          variant="outlined"
+          value={textValue} // Controlled input
+          onChange={handleTextChange} // Update state on input change
+          // default value is the size of the selected item
+          fullWidth/> : <TextField error onChange={handleTextChange} margin="normal" helperText="Please input numbers only"/>}</Stack> : <Box className='textFormat'>No Item Selected</Box>
           }</div>
         <Button>save</Button>
       </div>
