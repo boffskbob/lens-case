@@ -30,7 +30,7 @@ function App() {
       console.log("clicked item");
       setSelected(e.target.id);
       setTextValue(e.target.style.width.substring(0, e.target.style.width.length - 2) / 2)
-      updateRadius(100, e.target.id);
+      updateRadius(50, e.target.id);
     }
     // clicked on sandbox
     else{
@@ -41,8 +41,8 @@ function App() {
 
   const updateRadius = (radius, id) => {
     var item = document.getElementById(id);
-    item.style.width = String(radius) + 'px';
-    item.style.height = String(radius) + 'px';
+    item.style.width = String(radius * 2) + 'px';
+    item.style.height = String(radius * 2) + 'px';
   }
 
   const handleDrag = (e, id) => {
@@ -75,9 +75,11 @@ function App() {
 
   const handleTextChange = (e) => {
     setTextValue(e.target.value);
-    console.log(textValue);
 
-    // adjust selected - error when text isn't numbers
+    // adjust if its a valid number
+    if (/^\d+$/.test(e.target.value)){
+      updateRadius(parseInt(e.target.value), selected);
+    }
   }
 
   return (
@@ -97,7 +99,7 @@ function App() {
       </div>
       <div id='selection-container'>
         <div id="selections">{selected != null ? 
-          <Stack direction="row" spacing={2}><Box className='textFormat'>Radius</Box> {/^\d+$/.test(textValue) ? <TextField label="Enter Text"
+          <Stack direction="row" spacing={2}><Box className='textFormat' margin={2}>Radius</Box> {/^\d+$/.test(textValue) ? <TextField label="Enter Text"
           variant="outlined"
           value={textValue} // Controlled input
           onChange={handleTextChange} // Update state on input change
