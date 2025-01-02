@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, Button, Stack, TextField } from '@mui/material';
 import './App.css';
+import SaveButton from './SaveButton.jsx';
 
 const DEFAULT_DIAMETER = 50;
 
@@ -106,7 +107,7 @@ function App() {
           // default value is the size of the selected item
           fullWidth/> : <TextField error onChange={handleTextChange} margin="normal" helperText="Please input numbers only"/>}</Stack> : <Box className='textFormat'>No Item Selected</Box>
           }</div>
-        <Button>save</Button>
+        <SaveButton />
       </div>
     </div>
   )
