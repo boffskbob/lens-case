@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
@@ -42,17 +46,30 @@
 }
 
 #sandbox {
-  width : 900px;
-  height : 800px;
+  min-width : 900px;
+  height : 675px;
   background-color: white;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#case {
+  margin : auto;
+  width : 720px;
+  height : 540px;
+  border : 20px;
+  border-color : black;
+  background-color :grey;
+  position : relative;
 }
 
 #selection-container{
   display: flex;
   flex-direction: column;
-  width : 300px;
-  height : 800px;
+  min-width : 300px;
+  height : 675px;
   justify-content: flex-end;
 }
 
