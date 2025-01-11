@@ -100,6 +100,15 @@
 
 .textFormat{
   color:black;
-  display : inline-block;
+  display : flex;
+  justify-content: center;
+  align-items: center;
   padding : 10;
+}
+
+.textField{
+  display:flex;
+  flex-direction : row;
+  justify-content: center;
+  align-items: center;
 }
